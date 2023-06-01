@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Refresh } from "@mui/icons-material";
+import { Refresh, Edit } from "@mui/icons-material";
 import {
   Box,
   Typography,
   useMediaQuery,
   CircularProgress,
+  Fab,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { useTheme } from "@emotion/react";
@@ -23,7 +24,6 @@ const Home = () => {
     useGetAllMoviesMutation();
 
   useEffect(() => {
-    console.log(page);
     getAllMovies({
       pageNumber: page,
     });
@@ -105,9 +105,15 @@ const Home = () => {
           </Box>
         </Box>
       </Box>
-      <Box width={'100%'} py={'1rem'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+      <Box
+        width={"100%"}
+        py={"1rem"}
+        display={"flex"}
+        justifyContent={"center"}
+        alignItems={"center"}
+      >
         <LoadingButton
-          onClick={() => setPage((prev) => prev+1)}
+          onClick={() => setPage((prev) => prev + 1)}
           size="large"
           startIcon={<Refresh />}
           loading={allLoading}
@@ -117,6 +123,9 @@ const Home = () => {
         </LoadingButton>
       </Box>
       <MovieModal />
+      <Fab sx={{position: 'fixed', bottom: 5, right: 5}} color={theme.palette.secondary[200]} aria-label="edit">
+        <Edit />
+      </Fab>
     </Box>
   ) : (
     <Box

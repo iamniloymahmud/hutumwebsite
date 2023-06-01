@@ -9,7 +9,7 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const cors = require("cors");
-const { getData } = require("./util/uploader");
+const { getData, getCounter } = require("./util/uploader");
 
 //Internal Imports
 const { movieRouter } = require("./routes/movieRoutes");
@@ -43,6 +43,8 @@ app.get("/", (req, res) => {
 app.use("/movies", movieRouter);
 
 // getData();
+getCounter();
+
 //Error Handlers
 app.use(notFound);
 app.use(errorHandler);

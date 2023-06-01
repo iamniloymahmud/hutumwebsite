@@ -40,6 +40,20 @@ const getData = async () => {
   }
 };
 
+const getCounter = async () => {
+  try {
+    const data = await moviesModel.find().sort({ counter: -1 }).limit(8);
+    const download = data.reduce((prev, data) => {
+      return prev+=data.counter;
+    }, 0)
+    // console.log(download);
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   getData,
+  getCounter,
 };

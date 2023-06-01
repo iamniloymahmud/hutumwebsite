@@ -6,7 +6,7 @@ import Sidebar from "../../components/SideBar";
 
 const Layout = () => {
   const isNonMobile = useMediaQuery("(min-width: 600px)");
-  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+  const [isSideBarOpen, setIsSideBarOpen] = useState(true);
   return (
     <Box
       display={isNonMobile ? "flex" : "block"}

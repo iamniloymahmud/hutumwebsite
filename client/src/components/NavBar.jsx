@@ -31,8 +31,10 @@ import hutumProfile from "../assets/hutum.png";
 import hutumProfile1 from "../assets/hutum1.png";
 import { setModal, setMode } from "../redux/slice/globalSlice";
 import { useGetSearchMutation } from "../redux/endPoints/movie/movie";
+import { useLocation } from "react-router-dom";
 
 const NavBar = ({ isSideBarOpen, setIsSideBarOpen }) => {
+  const {pathname} = useLocation();
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
   const theme = useTheme();
@@ -41,7 +43,6 @@ const NavBar = ({ isSideBarOpen, setIsSideBarOpen }) => {
   useEffect(() => {
     if (search) {
       getSearch(search.trim());
-      // console.log(search);
     }
   }, [search]);
   const debounce = (fn, time) => {
@@ -59,7 +60,7 @@ const NavBar = ({ isSideBarOpen, setIsSideBarOpen }) => {
     setSearch(e.target.value);
   };
   const handleChange = debounce(doSearch, 500);
-  return (
+  return pathname !== '/about' && (
     <AppBar
       sx={{
         position: "static",

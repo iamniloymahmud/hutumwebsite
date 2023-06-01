@@ -6,11 +6,7 @@ import MovieModalBox from "./MovieModalBox";
 
 const MovieModal = () => {
   const data = useSelector((state) => state.global.modal);
-  console.log(data);
   const dispatch = useDispatch();
-  const movie = {
-    data,
-  };
   return (
     <Modal
       open={data ? true : false}

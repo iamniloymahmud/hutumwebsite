@@ -15,7 +15,6 @@ const movieApi = api.injectEndpoints({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          // console.log(data);
           dispatch(setHeroMovies(data));
         } catch (error) {}
       },
@@ -31,7 +30,6 @@ const movieApi = api.injectEndpoints({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log(data);
           dispatch(setAllMovies(data));
         } catch (error) {}
       },

@@ -28,10 +28,10 @@ const navItems = [
     text: "Movies",
     icon: <LocalMoviesOutlined />,
   },
-  // {
-  //   text: "Series",
-  //   icon: <LiveTvOutlined />,
-  // },
+  {
+    text: "Series",
+    icon: <LiveTvOutlined />,
+  },
 ];
 
 const Sidebar = ({
@@ -56,6 +56,7 @@ const Sidebar = ({
           onClose={() => setIsSideBarOpen(false)}
           variant="persistent"
           anchor="left"
+          transitionDuration={3000}
           sx={{
             width: drawerWidth,
             "& .MuiDrawer-paper": {
@@ -138,7 +139,7 @@ const Sidebar = ({
               })}
             </List>
           </Box>
-          {/* <Box position={"absolute"} pt={"1rem"} bottom={"1rem"} width={"100%"}>
+          <Box position={"absolute"} pt={"1rem"} bottom={"1rem"} width={"100%"}>
             <Divider />
             <ListItem disablePadding>
               <ListItemButton
@@ -174,7 +175,7 @@ const Sidebar = ({
                 )}
               </ListItemButton>
             </ListItem>
-          </Box> */}
+          </Box>
         </Drawer>
       )}
     </Box>

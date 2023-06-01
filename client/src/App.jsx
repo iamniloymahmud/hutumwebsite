@@ -7,6 +7,8 @@ import { themeSettings } from "./theme";
 import Layout from "./screens/laybout/Layout";
 import Home from "./screens/home/Home";
 import { useGetHeroMoviesQuery, useGetPopluarMoviesQuery } from "./redux/endPoints/movie/movie";
+import Series from './screens/series/Series';
+import About from './screens/about/About';
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -34,6 +36,8 @@ function App() {
             <Route element={<Layout />}>
               <Route path="/" element={<Navigate to={"/movies"} replace />} />
               <Route path="/movies" element={<Home />} />
+              <Route path="/series" element={<Series />} />
+              <Route path="/about" element={<About />} />
             </Route>
           </Routes>
         </ThemeProvider>
