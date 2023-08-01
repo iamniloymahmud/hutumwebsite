@@ -20,6 +20,7 @@ import {
   LiveTvOutlined,
   ChevronLeft,
   ChevronRightOutlined,
+  Close
 } from "@mui/icons-material";
 import FlexBetween from "./FlexBetween";
 
@@ -48,48 +49,37 @@ const Sidebar = ({
   useEffect(() => {
     setActive(pathname.substring(1));
   }, [pathname]);
+
+  const toggleDrawer = (state) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setIsSideBarOpen(state);
+  };
+
   return (
-    <Box component="nav">
-      {isSideBarOpen && (
+    <div>
+      <React.Fragment key={"tab"}>
         <Drawer
+          anchor={"top"}
           open={isSideBarOpen}
-          onClose={() => setIsSideBarOpen(false)}
-          variant="persistent"
-          anchor="left"
-          transitionDuration={3000}
-          sx={{
-            width: drawerWidth,
-            "& .MuiDrawer-paper": {
-              color: theme.palette.secondary[200],
-              backgroundColor: theme.palette.background.alt,
-              boxSizing: "border-box",
-              borderWidth: isNonMobile ? 0 : "2px",
-              width: drawerWidth,
-            },
-          }}
+          onClose={toggleDrawer(false)}
+          transitionDuration={500}
         >
-          <Box width="100%">
-            <Box m="1.5rem 2rem 2rem 3rem">
-              <FlexBetween color={theme.palette.secondary.main}>
-                <Box display={"flex"} alignItems={"center"} gap={"0.5rem"}>
-                  <Typography
-                    variant="h4"
-                    fontWeight={"bold"}
-                    sx={{
-                      textAlign: "center",
-                      width: "100%",
-                    }}
-                  >
-                    User's Panel
-                  </Typography>
-                </Box>
-                {!isNonMobile && (
-                  <IconButton onClick={() => setIsSideBarOpen(!isSideBarOpen)}>
-                    <ChevronLeft />
-                  </IconButton>
-                )}
-              </FlexBetween>
-            </Box>
+          <Box
+            sx={{
+              width: "auto",
+              minHeight: '300px',
+              backgroundColor: theme.palette.background.default,
+              paddingTop: '1rem',
+              position: 'relative',
+            }}
+            onClick={toggleDrawer(false)}
+            onKeyDown={toggleDrawer(false)}
+          >
             <List>
               {navItems.map(({ text, icon }) => {
                 if (!icon) {
@@ -101,7 +91,9 @@ const Sidebar = ({
                 }
                 const lcText = text.toLowerCase();
                 return (
-                  <ListItem key={text} disablePadding>
+                  <ListItem key={text} disablePadding sx={{
+                    py:'0.25rem',
+                  }}>
                     <ListItemButton
                       onClick={() => {
                         navigate(`/${lcText}`);
@@ -130,55 +122,15 @@ const Sidebar = ({
                         {icon}
                       </ListItemIcon>
                       <ListItemText primary={text} />
-                      {active === lcText && (
-                        <ChevronRightOutlined sx={{ ml: "auto" }} />
-                      )}
                     </ListItemButton>
                   </ListItem>
                 );
               })}
             </List>
           </Box>
-          <Box position={"absolute"} pt={"1rem"} bottom={"1rem"} width={"100%"}>
-            <Divider />
-            <ListItem disablePadding>
-              <ListItemButton
-                onClick={() => {
-                  navigate(`/about`);
-                  setActive('about');
-                }}
-                sx={{
-                  backgroundColor:
-                    active === 'about'
-                      ? theme.palette.secondary[300]
-                      : "transparent",
-                  color:
-                    active === 'about'
-                      ? theme.palette.primary[600]
-                      : theme.palette.secondary[100],
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    ml: "2rem",
-                    color:
-                      active === 'about'
-                        ? theme.palette.primary[600]
-                        : theme.palette.secondary[200],
-                  }}
-                >
-                  <InfoOutlined />
-                </ListItemIcon>
-                <ListItemText primary='About Us' />
-                {active === 'about' && (
-                  <ChevronRightOutlined sx={{ ml: "auto" }} />
-                )}
-              </ListItemButton>
-            </ListItem>
-          </Box>
         </Drawer>
-      )}
-    </Box>
+      </React.Fragment>
+    </div>
   );
 };
 

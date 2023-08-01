@@ -32,7 +32,7 @@ const Home = () => {
   const state = useSelector((state) => state?.movie || {});
 
   return state?.heroMovies && state?.allMovies && state?.popularMovies ? (
-    <Box m={"1.5rem 1rem"}>
+    <Box m={"1.5rem 1rem"} pt={'2rem'}>
       <Box
         mt={"20px"}
         display={"grid"}
@@ -123,9 +123,6 @@ const Home = () => {
         </LoadingButton>
       </Box>
       <MovieModal />
-      <Fab sx={{position: 'fixed', bottom: 5, right: 5}} color={theme.palette.secondary[200]} aria-label="edit">
-        <Edit />
-      </Fab>
     </Box>
   ) : (
     <Box

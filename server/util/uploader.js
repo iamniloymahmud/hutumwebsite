@@ -1,5 +1,6 @@
 const { moviesModel } = require("../models/mainModels");
 const axios = require("axios");
+const moment = require('moment');
 
 const sheetData = "https://sheetdb.io/api/v1/a5ven54rvh6g9";
 // `https://api.themoviedb.org/3/find/${imdb_id}?api_key=${movie_api}&language=en-US&external_source=imdb_id`
@@ -42,12 +43,13 @@ const getData = async () => {
 
 const getCounter = async () => {
   try {
-    const data = await moviesModel.find().sort({ counter: -1 }).limit(8);
+    const data = await moviesModel.find().sort({ counter: -1 });
     const download = data.reduce((prev, data) => {
       return prev+=data.counter;
     }, 0)
-    // console.log(download);
-    console.log(data);
+    console.log(download);
+    console.log(moment(new Date('month-day-year')).format('DD MMMM, yyyy'));
+    // console.log(data);
   } catch (error) {
     console.log(error);
   }

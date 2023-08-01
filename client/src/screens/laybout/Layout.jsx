@@ -1,21 +1,24 @@
 import React, { useState } from "react";
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, useMediaQuery, Fab, Link } from "@mui/material";
+import { Edit } from "@mui/icons-material";
 import { Outlet } from "react-router-dom";
 import NavBar from "../../components/NavBar";
 import Sidebar from "../../components/SideBar";
+import { useTheme } from "@emotion/react";
 
 const Layout = () => {
   const isNonMobile = useMediaQuery("(min-width: 600px)");
-  const [isSideBarOpen, setIsSideBarOpen] = useState(true);
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+  const theme = useTheme();
   return (
     <Box
       display={isNonMobile ? "flex" : "block"}
       width={"100%"}
       height={"100%"}
     >
-      <Sidebar 
+      <Sidebar
         isNonMobile={isNonMobile}
-        drawerWidth={'300px'}
+        drawerWidth={"300px"}
         isSideBarOpen={isSideBarOpen}
         setIsSideBarOpen={setIsSideBarOpen}
       />
