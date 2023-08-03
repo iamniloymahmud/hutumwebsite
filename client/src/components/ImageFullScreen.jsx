@@ -2,6 +2,8 @@ import { Modal, Box, IconButton, Button, Typography } from "@mui/material";
 import { Close, ArrowCircleRight, ArrowCircleLeft } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
+import FlexBetween from "./FlexBetween";
+import CircularProgrssBar from "./CircularProgrssBar";
 
 const ImageFullScreen = ({
   open,
@@ -11,12 +13,14 @@ const ImageFullScreen = ({
   sizeOfArray,
   setIndex,
 }) => {
-  // console.log(open);
+  const [loading, setLoading] = useState(false);
   const [details, setDetails] = useState(false);
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown, true);
   }, []);
-
+  useEffect(() => {
+    setLoading(false);
+  }, [index])
   const handleKeyDown = (e) => {
     // console.log(e.key);
     if (e.key === "ArrowLeft") {
@@ -42,7 +46,7 @@ const ImageFullScreen = ({
         },
       }}
     >
-      <Box
+      {<Box
         sx={{
           width: "100%",
           height: "100%",
@@ -52,16 +56,19 @@ const ImageFullScreen = ({
           position: "relative",
         }}
       >
+        {!loading && <CircularProgrssBar />}
         <Box padding={0} sx={{ margin: 0, padding: 0, position: "relative" }}>
           <Box
             component={"img"}
-            maxWidth={window.innerWidth*0.96}
+            maxWidth={window.innerWidth * 0.96}
             maxHeight={window.innerHeight * 0.98}
             padding={0}
+            onLoad={() => setLoading(true)}
             src={open?.link}
             sx={{
               borderRadius: "0.55rem",
               padding: 0,
+              display: loading ? '' : 'none'
             }}
           />
           <Box
@@ -76,32 +83,34 @@ const ImageFullScreen = ({
               borderBottomRightRadius: "0.55rem",
             }}
           >
-            <Typography variant="h4">{open.place_tag}</Typography>
-            {open?.date && (
-              <Typography sx={{ fontSize: 14 }}>
-                {moment(new Date(open?.date)).format("DD MMMM, yyyy")}
-              </Typography>
-            )}
-            <Typography sx={{ fontSize: 14 }}>{`${open.author} (${
-              open.dept
-            } '${open.batch?.slice(-2)})`}</Typography>
-            {!details && (
-              <Typography
-                onClick={() => setDetails(true)}
-                component={"div"}
-                sx={{ fontSize: 14, cursor: "pointer" }}
-              >
-                <u>See Details</u>
-              </Typography>
-            )}
+            <Typography variant="h5">{open.place_tag}</Typography>
+            <FlexBetween>
+              {open?.date && (
+                <Typography sx={{ fontSize: 14 }}>
+                  {moment(new Date(open?.date)).format("DD MMMM, yyyy")}
+                </Typography>
+              )}
+              {!details && (
+                <Typography
+                  onClick={() => setDetails(true)}
+                  component={"div"}
+                  sx={{ fontSize: 14, cursor: "pointer", pr: 1, }}
+                >
+                  <u>See Details</u>
+                </Typography>
+              )}
+            </FlexBetween>
 
             {/* Show Details of the photo */}
 
             {details && (
               <Box>
-                <Typography sx={{ fontSize: 14, pt: 1 }}>
-                  <u>Some Words from Photographer</u>
+                <Typography sx={{ fontSize: 14, pt: 1, }}>
+                  <u>Photographer:</u>
                 </Typography>
+                <Typography sx={{ fontSize: 14 }}>{`${open.author} (${
+                  open.dept
+                } '${open.batch?.slice(-2)})`}</Typography>
                 {open?.caption && (
                   <Typography sx={{ fontSize: 14 }}>
                     Caption: {open?.caption}
@@ -124,8 +133,8 @@ const ImageFullScreen = ({
           </Box>
         </Box>
         <Box sx={{ position: "absolute", top: 2, right: 2 }}>
-          <IconButton  onClick={() => handleClose(false)}>
-            <Close fontSize="large" sx={{color: 'black'}} />
+          <IconButton onClick={() => handleClose(false)}>
+            <Close fontSize="large" sx={{ color: "black" }} />
           </IconButton>
         </Box>
         <Box
@@ -137,14 +146,14 @@ const ImageFullScreen = ({
           }}
         >
           <IconButton
-            disabled={index === 0}
+            disabled={((index === 0) || !loading)}
             onClick={() =>
               setIndex((prev) => {
                 return Math.max(0, prev - 1);
               })
             }
           >
-            <ArrowCircleLeft sx={{color: 'black'}} fontSize="large" />
+            <ArrowCircleLeft sx={{ color: "black" }} fontSize="large" />
           </IconButton>
         </Box>
         <Box
@@ -156,17 +165,17 @@ const ImageFullScreen = ({
           }}
         >
           <IconButton
-            disabled={index >= sizeOfArray - 1}
+            disabled={((index >= sizeOfArray - 1) || !loading)}
             onClick={() =>
               setIndex((prev) => {
                 return Math.min(sizeOfArray - 1, prev + 1);
               })
             }
           >
-            <ArrowCircleRight sx={{color: 'black'}} fontSize="large" />
+            <ArrowCircleRight sx={{ color: "black" }} fontSize="large" />
           </IconButton>
         </Box>
-      </Box>
+      </Box>}
     </Modal>
   );
 };
