@@ -14,7 +14,7 @@ const store = configureStore({
     middleware: (getDefaultMiddlewares) => {
         return getDefaultMiddlewares().concat(api.middleware);
     },
-    devTools: true,
+    devTools: !import.meta.env.PROD,
 });
 
 export default store;
