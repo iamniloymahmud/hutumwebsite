@@ -42,7 +42,7 @@ const ImageFullScreen = ({
       }}
       sx={{
         "& .MuiModal-backdrop": {
-          backgroundColor: "rgba(255,255,255, 0.8)",
+          backgroundColor: "rgba(0,0,0, 0.95)",
         },
       }}
     >
@@ -134,7 +134,7 @@ const ImageFullScreen = ({
         </Box>
         <Box sx={{ position: "absolute", top: 2, right: 2 }}>
           <IconButton onClick={() => handleClose(false)}>
-            <Close fontSize="large" sx={{ color: "black" }} />
+            <Close fontSize="large" sx={{ color: "white" }} />
           </IconButton>
         </Box>
         <Box
@@ -153,7 +153,7 @@ const ImageFullScreen = ({
               })
             }
           >
-            <ArrowCircleLeft sx={{ color: "black" }} fontSize="large" />
+            <ArrowCircleLeft sx={{ color: "white" }} fontSize="large" />
           </IconButton>
         </Box>
         <Box
@@ -172,7 +172,7 @@ const ImageFullScreen = ({
               })
             }
           >
-            <ArrowCircleRight sx={{ color: "black" }} fontSize="large" />
+            <ArrowCircleRight sx={{ color: "white" }} fontSize="large" />
           </IconButton>
         </Box>
       </Box>}
