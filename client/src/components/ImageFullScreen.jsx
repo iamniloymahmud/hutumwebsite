@@ -55,7 +55,7 @@ const ImageFullScreen = ({
         <Box padding={0} sx={{ margin: 0, padding: 0, position: "relative" }}>
           <Box
             component={"img"}
-            maxWidth={window.innerWidth}
+            maxWidth={window.innerWidth*0.96}
             maxHeight={window.innerHeight * 0.98}
             padding={0}
             src={open?.link}
@@ -76,20 +76,20 @@ const ImageFullScreen = ({
               borderBottomRightRadius: "0.55rem",
             }}
           >
-            <Typography variant="h3">{open.place_tag}</Typography>
+            <Typography variant="h4">{open.place_tag}</Typography>
             {open?.date && (
-              <Typography sx={{ fontSize: 17 }}>
+              <Typography sx={{ fontSize: 14 }}>
                 {moment(new Date(open?.date)).format("DD MMMM, yyyy")}
               </Typography>
             )}
-            <Typography sx={{ fontSize: 17 }}>{`${open.author} (${
+            <Typography sx={{ fontSize: 14 }}>{`${open.author} (${
               open.dept
             } '${open.batch?.slice(-2)})`}</Typography>
             {!details && (
               <Typography
                 onClick={() => setDetails(true)}
                 component={"div"}
-                sx={{ fontSize: 17, cursor: "pointer" }}
+                sx={{ fontSize: 14, cursor: "pointer" }}
               >
                 <u>See Details</u>
               </Typography>
@@ -99,23 +99,23 @@ const ImageFullScreen = ({
 
             {details && (
               <Box>
-                <Typography sx={{ fontSize: 17, pt: 1 }}>
+                <Typography sx={{ fontSize: 14, pt: 1 }}>
                   <u>Some Words from Photographer</u>
                 </Typography>
                 {open?.caption && (
-                  <Typography sx={{ fontSize: 17 }}>
+                  <Typography sx={{ fontSize: 14 }}>
                     Caption: {open?.caption}
                   </Typography>
                 )}
                 {open?.description && (
-                  <Typography sx={{ fontSize: 17 }}>
+                  <Typography sx={{ fontSize: 14 }}>
                     Description: {open?.description}
                   </Typography>
                 )}
                 <Typography
                   onClick={() => setDetails(false)}
                   component={"div"}
-                  sx={{ fontSize: 17, cursor: "pointer" }}
+                  sx={{ fontSize: 14, cursor: "pointer" }}
                 >
                   <u>Hide Details</u>
                 </Typography>
@@ -131,7 +131,7 @@ const ImageFullScreen = ({
         <Box
           sx={{
             position: "absolute",
-            top: "50%",
+            bottom: 2,
             left: 1,
             transform: "translate(0,-50%)",
           }}
@@ -150,7 +150,7 @@ const ImageFullScreen = ({
         <Box
           sx={{
             position: "absolute",
-            top: "50%",
+            bottom: 2,
             right: 1,
             transform: "translate(0,-50%)",
           }}
