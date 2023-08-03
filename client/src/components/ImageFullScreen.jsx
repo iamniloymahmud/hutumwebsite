@@ -55,8 +55,8 @@ const ImageFullScreen = ({
         <Box padding={0} sx={{ margin: 0, padding: 0, position: "relative" }}>
           <Box
             component={"img"}
-            maxWidth={window.innerWidth * 0.9}
-            maxHeight={window.innerHeight * 0.8}
+            maxWidth={window.innerWidth}
+            maxHeight={window.innerHeight * 0.98}
             padding={0}
             src={open?.link}
             sx={{
