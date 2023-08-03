@@ -1,8 +1,9 @@
+import { Typography } from '@mui/material'
 import React from 'react'
 
 const Series = () => {
   return (
-    <div>Series</div>
+    <Typography pt={10}>Hello World</Typography>
   )
 }
 

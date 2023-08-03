@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
-  Divider,
   Drawer,
   IconButton,
   List,
@@ -15,12 +14,10 @@ import {
 
 import { useLocation, useNavigate } from "react-router-dom";
 import {
-  InfoOutlined,
   LocalMoviesOutlined,
   LiveTvOutlined,
-  ChevronLeft,
-  ChevronRightOutlined,
-  Close
+  Park,
+  ArrowCircleUp
 } from "@mui/icons-material";
 import FlexBetween from "./FlexBetween";
 
@@ -32,6 +29,10 @@ const navItems = [
   {
     text: "Series",
     icon: <LiveTvOutlined />,
+  },
+  {
+    text: "Beautiful_KUET",
+    icon: <Park />,
   },
 ];
 
@@ -121,12 +122,20 @@ const Sidebar = ({
                       >
                         {icon}
                       </ListItemIcon>
-                      <ListItemText primary={text} />
+                      <ListItemText primary={text.split("_").join(" ")} />
                     </ListItemButton>
                   </ListItem>
                 );
               })}
             </List>
+            <IconButton sx={{
+              position: 'absolute',
+              bottom: 2,
+              left: '50%',
+              transform: 'translate(-50%,0)',
+            }}>
+                <ArrowCircleUp fontSize={'large'} />
+            </IconButton>
           </Box>
         </Drawer>
       </React.Fragment>

@@ -22,7 +22,7 @@ const getAllMovies = async (req, res, next) => {
     const movieData = await moviesModel
       .find({})
       .sort({ release_date: -1 })
-      .skip(((pageNumber-1) * pageSize)+5)
+      .skip(((pageNumber-1) * pageSize))
       .limit(pageSize)
       .select("-msg_id");
     res.status(200).json(movieData);

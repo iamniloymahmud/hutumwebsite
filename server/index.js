@@ -9,11 +9,12 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const cors = require("cors");
-const { getData, getCounter } = require("./util/uploader");
+const { getData, getCounter, updateImages } = require("./util/uploader");
 
 //Internal Imports
 const { movieRouter } = require("./routes/movieRoutes");
 const { errorHandler, notFound } = require("./controller/errorHandlers");
+const { imageRouter } = require("./routes/imageRoutes");
 
 //Configuration
 dotenv.config();
@@ -46,9 +47,10 @@ app.get("/", (req, res) => {
   });
 });
 app.use("/movies", movieRouter);
+app.use("/images", imageRouter);
 
 // getData();
-getCounter();
+// updateImages();
 
 //Error Handlers
 app.use(notFound);

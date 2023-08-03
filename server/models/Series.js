@@ -31,12 +31,6 @@ const seriesSchema = mongoose.Schema({
       overview: String,
       poster_path: String,
       season_number: Number,
-      msg_ids: [
-        {
-          episode_no: Number,
-          msg_id: Number,
-        }
-      ],
     },
   ],
   tagline: String,

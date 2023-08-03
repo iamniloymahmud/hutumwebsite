@@ -9,3 +9,15 @@ body,
   width: 100%;
   font-family: 'Source Sans Pro', sans-serif;
 }
+
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+::-webkit-scrollbar-track {
+  background: #7a7f9d;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0e0f15;
+}

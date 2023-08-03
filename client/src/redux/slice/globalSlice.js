@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   mode: "dark",
   modal: undefined,
+  active: '',
 };
 
 const globalSlice = createSlice({
@@ -19,8 +20,11 @@ const globalSlice = createSlice({
         state.modal = action.payload;
       }
     },
+    setActive: (state, action) => {
+      state.active = action.payload;
+    }
   },
 });
 
 export default globalSlice;
-export const { setMode, setModal } = globalSlice.actions;
+export const { setMode, setModal, setActive } = globalSlice.actions;
