@@ -15,12 +15,49 @@ const ImageFullScreen = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const [details, setDetails] = useState(false);
+
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+  const [hide, setHide] = useState(true);
+
+  // swipte Distance
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX);
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd){
+      setHide((prev) => !prev);
+      return;
+    };
+    const distanceX = touchStartX - touchEndX;
+    const distanceY = touchStartY - touchEndY;
+    const isLeftSwipe = distanceX > minSwipeDistance;
+    const isRightSwipe = distanceX < -minSwipeDistance;
+
+    if (isRightSwipe && Math.abs(distanceX) > distanceY) {
+      setIndex((prev) => {
+        return Math.min(sizeOfArray - 1, prev + 1);
+      })
+    }
+    if (isLeftSwipe && distanceX > distanceY) {
+      setIndex((prev) => {
+        return Math.max(0, prev - 1);
+      })
+    }
+  };
+
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown, true);
   }, []);
   useEffect(() => {
     setLoading(false);
-  }, [index])
+  }, [index]);
   const handleKeyDown = (e) => {
     // console.log(e.key);
     if (e.key === "ArrowLeft") {
@@ -46,136 +83,151 @@ const ImageFullScreen = ({
         },
       }}
     >
-      {<Box
-        sx={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          position: "relative",
-        }}
-      >
-        {!loading && <CircularProgrssBar />}
-        <Box padding={0} sx={{ margin: 0, padding: 0, position: "relative" }}>
-          <Box
-            component={"img"}
-            maxWidth={window.innerWidth}
-            maxHeight={window.innerHeight * 0.98}
-            onLoad={() => setLoading(true)}
-            src={open?.link}
-            sx={{
-              borderRadius: "0.55rem",
-              padding: 0,
-              display: loading ? '' : 'none'
-            }}
-          />
+      {
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "relative",
+          }}
+        >
+          {!loading && <CircularProgrssBar />}
+          <Box padding={0} sx={{ margin: 0, padding: 0, position: "relative" }}>
+            {/* Image Show */}
+            <Box
+              onTouchStart={onTouchStart}
+              onTouchEnd={onTouchEnd}
+              onTouchMove={onTouchMove}
+              component={"img"}
+              maxWidth={window.innerWidth}
+              maxHeight={window.innerHeight}
+              onLoad={() => setLoading(true)}
+              src={open?.link}
+              sx={{
+                padding: 0,
+                display: loading ? "" : "none",
+              }}
+            />
+
+            {/* Full Details */}
+            {hide && <Box
+              sx={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                backgroundColor: "rgba(0,0,0,0.5)",
+                width: "100%",
+                paddingLeft: 2,
+                pb: 1,
+                borderBottomLeftRadius: "0.55rem",
+                borderBottomRightRadius: "0.55rem",
+              }}
+            >
+              <Typography variant="h5">{open.place_tag}</Typography>
+              <FlexBetween>
+                {open?.date && (
+                  <Typography sx={{ fontSize: 14 }}>
+                    {moment(new Date(open?.date)).format("DD MMMM, yyyy")}
+                  </Typography>
+                )}
+                {!details && (
+                  <Typography
+                    onClick={() => setDetails(true)}
+                    component={"div"}
+                    sx={{ fontSize: 14, cursor: "pointer", pr: 1 }}
+                  >
+                    <u>See Details</u>
+                  </Typography>
+                )}
+              </FlexBetween>
+
+              {/* Show Details of the photo */}
+
+              {details && (
+                <Box>
+                  <Typography sx={{ fontSize: 14, pt: 1 }}>
+                    <u>Photographer:</u>
+                  </Typography>
+                  <Typography sx={{ fontSize: 14 }}>{`${open.author} (${
+                    open.dept
+                  } '${open.batch?.slice(-2)})`}</Typography>
+                  {open?.caption && (
+                    <Typography sx={{ fontSize: 14 }}>
+                      Caption: {open?.caption}
+                    </Typography>
+                  )}
+                  {open?.description && (
+                    <Typography sx={{ fontSize: 14 }}>
+                      Description: {open?.description}
+                    </Typography>
+                  )}
+                  <Typography
+                    onClick={() => setDetails(false)}
+                    component={"div"}
+                    sx={{ fontSize: 14, cursor: "pointer" }}
+                  >
+                    <u>Hide Details</u>
+                  </Typography>
+                </Box>
+              )}
+            </Box>}
+          </Box>
+
+          {/* Close Button */}
+
+          <Box sx={{ position: "absolute", top: 2, right: 2 }}>
+            <IconButton onClick={() => handleClose(false)}>
+              <Close fontSize="large" sx={{ color: "white" }} />
+            </IconButton>
+          </Box>
+
+          {/* Left Button */}
           <Box
             sx={{
               position: "absolute",
-              bottom: 0,
-              left: 0,
-              backgroundColor: "rgba(0,0,0,0.5)",
-              width: "100%",
-              paddingLeft: 2,
-              pb: 1,
-              borderBottomLeftRadius: "0.55rem",
-              borderBottomRightRadius: "0.55rem",
+              bottom: 2,
+              left: 1,
+              transform: "translate(0,-50%)",
             }}
           >
-            <Typography variant="h5">{open.place_tag}</Typography>
-            <FlexBetween>
-              {open?.date && (
-                <Typography sx={{ fontSize: 14 }}>
-                  {moment(new Date(open?.date)).format("DD MMMM, yyyy")}
-                </Typography>
-              )}
-              {!details && (
-                <Typography
-                  onClick={() => setDetails(true)}
-                  component={"div"}
-                  sx={{ fontSize: 14, cursor: "pointer", pr: 1, }}
-                >
-                  <u>See Details</u>
-                </Typography>
-              )}
-            </FlexBetween>
+            <IconButton
+              disabled={index === 0 || !loading}
+              onClick={() =>
+                setIndex((prev) => {
+                  return Math.max(0, prev - 1);
+                })
+              }
+            >
+              <ArrowCircleLeft sx={{ color: "white" }} fontSize="large" />
+            </IconButton>
+          </Box>
 
-            {/* Show Details of the photo */}
+          {/* Right Button */}
 
-            {details && (
-              <Box>
-                <Typography sx={{ fontSize: 14, pt: 1, }}>
-                  <u>Photographer:</u>
-                </Typography>
-                <Typography sx={{ fontSize: 14 }}>{`${open.author} (${
-                  open.dept
-                } '${open.batch?.slice(-2)})`}</Typography>
-                {open?.caption && (
-                  <Typography sx={{ fontSize: 14 }}>
-                    Caption: {open?.caption}
-                  </Typography>
-                )}
-                {open?.description && (
-                  <Typography sx={{ fontSize: 14 }}>
-                    Description: {open?.description}
-                  </Typography>
-                )}
-                <Typography
-                  onClick={() => setDetails(false)}
-                  component={"div"}
-                  sx={{ fontSize: 14, cursor: "pointer" }}
-                >
-                  <u>Hide Details</u>
-                </Typography>
-              </Box>
-            )}
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: 2,
+              right: 1,
+              transform: "translate(0,-50%)",
+            }}
+          >
+            <IconButton
+              disabled={index >= sizeOfArray - 1 || !loading}
+              onClick={() =>
+                setIndex((prev) => {
+                  return Math.min(sizeOfArray - 1, prev + 1);
+                })
+              }
+            >
+              <ArrowCircleRight sx={{ color: "white" }} fontSize="large" />
+            </IconButton>
           </Box>
         </Box>
-        <Box sx={{ position: "absolute", top: 2, right: 2 }}>
-          <IconButton onClick={() => handleClose(false)}>
-            <Close fontSize="large" sx={{ color: "white" }} />
-          </IconButton>
-        </Box>
-        <Box
-          sx={{
-            position: "absolute",
-            bottom: 2,
-            left: 1,
-            transform: "translate(0,-50%)",
-          }}
-        >
-          <IconButton
-            disabled={((index === 0) || !loading)}
-            onClick={() =>
-              setIndex((prev) => {
-                return Math.max(0, prev - 1);
-              })
-            }
-          >
-            <ArrowCircleLeft sx={{ color: "white" }} fontSize="large" />
-          </IconButton>
-        </Box>
-        <Box
-          sx={{
-            position: "absolute",
-            bottom: 2,
-            right: 1,
-            transform: "translate(0,-50%)",
-          }}
-        >
-          <IconButton
-            disabled={((index >= sizeOfArray - 1) || !loading)}
-            onClick={() =>
-              setIndex((prev) => {
-                return Math.min(sizeOfArray - 1, prev + 1);
-              })
-            }
-          >
-            <ArrowCircleRight sx={{ color: "white" }} fontSize="large" />
-          </IconButton>
-        </Box>
-      </Box>}
+      }
     </Modal>
   );
 };

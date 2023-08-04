@@ -19,7 +19,6 @@ const getImageByYear = async (req, res, next) => {
     const pageSize = 12;
     const data = await imageModel
       .find({ year: year })
-      .sort({ year: -1 })
       .skip((pageNumber - 1) * pageSize)
       .limit(pageSize)
       .select("-_id");
