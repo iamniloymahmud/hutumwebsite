@@ -3,6 +3,7 @@ import {
   setHeroMovies,
   setAllMovies,
   setPopularMovies,
+  clearAllMovies
 } from "../../slice/movieSlice";
 
 const movieApi = api.injectEndpoints({
@@ -30,6 +31,9 @@ const movieApi = api.injectEndpoints({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
+          if(args?.pageNumber === 1){
+            dispatch(clearAllMovies());
+          }
           dispatch(setAllMovies(data));
         } catch (error) {}
       },

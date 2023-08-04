@@ -18,9 +18,12 @@ const movieSlice = createSlice({
         },
         setPopularMovies: (state, action) => {
             state.popularMovies = action.payload;
+        },
+        clearAllMovies: (state, action) => {
+            state.allMovies = [];
         }
     },
 });
 
 export default movieSlice;
-export const {setHeroMovies, setAllMovies, setPopularMovies} = movieSlice.actions;
+export const {setHeroMovies, setAllMovies, setPopularMovies, clearAllMovies} = movieSlice.actions;
