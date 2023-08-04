@@ -23,6 +23,7 @@ const ImageGrid = ({ year, value, setValue }) => {
   const [index, setIndex] = useState(null);
   const screenName = theme.breakpoints.screenBreakPoint(useMediaQuery, theme);
   const sizeOfArray = images?.[year]?.length;
+  console.log('image Grid');
   return (
     <Box position={'relative'}>
       {images?.[year] ? (

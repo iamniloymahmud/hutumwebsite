@@ -16,6 +16,7 @@ const getYear = async (req, res, next) => {
 const getImageByYear = async (req, res, next) => {
   try {
     const { year, page : pageNumber } = req.body;
+    console.log(req.body);
     const pageSize = 12;
     const data = await imageModel
       .find({ year: year })

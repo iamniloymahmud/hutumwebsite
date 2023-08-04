@@ -3,7 +3,7 @@ import { Close, ArrowCircleRight, ArrowCircleLeft } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import FlexBetween from "./FlexBetween";
-import CircularProgrssBar from "./CircularProgrssBar";
+import ProgrssBar from "./ProgressBar";
 import { useSelector } from "react-redux";
 
 const ImageFullScreen = ({
@@ -64,31 +64,42 @@ const ImageFullScreen = ({
     }
   };
 
-  // useEffect(() => {
-  //   setIndex((prev) => {
-  //     return Math.min(sizeOfArray - 1, prev + 1);
-  //   });
-  // }, [value]);
-
   useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown, true);
-  }, []);
+    const handleKeyDown = (e) => {
+      if (e.key === "ArrowLeft") {
+        setIndex((prev) => {
+          return Math.max(0, prev - 1);
+        });
+      }
+      if (e.key === "ArrowRight") {
+        setIndex((prev) => {
+          // console.log(prev);
+          if (prev + 1 === sizeOfArray && !states[open.year]) {
+            console.log(sizeOfArray);
+            console.log('hello');
+            setValue((prev) => {
+              return {
+                ...prev,
+                page: prev.page + 1,
+              };
+            });
+          }
+          return Math.min(sizeOfArray - 1, prev + 1);
+        });
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+
+  }, [states]);
   useEffect(() => {
     setLoading(false);
   }, [index]);
-  const handleKeyDown = (e) => {
-    // console.log(e.key);
-    if (e.key === "ArrowLeft") {
-      setIndex((prev) => {
-        return Math.max(0, prev - 1);
-      });
-    }
-    if (e.key === "ArrowRight") {
-      setIndex((prev) => {
-        return Math.min(sizeOfArray - 1, prev + 1);
-      });
-    }
-  };
+
   return (
     <Modal
       open={isOpen}
@@ -112,7 +123,7 @@ const ImageFullScreen = ({
             position: "relative",
           }}
         >
-          {(!loading || value) && <CircularProgrssBar />}
+          {(!loading || value) && <ProgrssBar />}
           <Box padding={0} sx={{ margin: 0, padding: 0, position: "relative" }}>
             {/* Image Show */}
             {!value && (
@@ -147,10 +158,10 @@ const ImageFullScreen = ({
                   borderBottomRightRadius: "0.55rem",
                 }}
               >
-                <Typography variant="h5">{open.place_tag}</Typography>
+                <Typography variant="h5" sx={{color: 'white'}}>{open.place_tag}</Typography>
                 <FlexBetween>
                   {open?.date && (
-                    <Typography sx={{ fontSize: 14 }}>
+                    <Typography sx={{ fontSize: 14, color: 'white' }}>
                       {moment(new Date(open?.date)).format("DD MMMM, yyyy")}
                     </Typography>
                   )}
@@ -158,7 +169,7 @@ const ImageFullScreen = ({
                     <Typography
                       onClick={() => setDetails(true)}
                       component={"div"}
-                      sx={{ fontSize: 14, cursor: "pointer", pr: 1 }}
+                      sx={{ fontSize: 14, cursor: "pointer", pr: 1, color: 'white' }}
                     >
                       <u>See Details</u>
                     </Typography>
@@ -169,26 +180,26 @@ const ImageFullScreen = ({
 
                 {details && (
                   <Box>
-                    <Typography sx={{ fontSize: 14, pt: 1 }}>
+                    <Typography sx={{ fontSize: 14, pt: 1, color: 'white' }}>
                       <u>Photographer:</u>
                     </Typography>
-                    <Typography sx={{ fontSize: 14 }}>{`${open.author} (${
+                    <Typography sx={{ fontSize: 14, color: 'white' }}>{`${open.author} (${
                       open.dept
                     } '${open.batch?.slice(-2)})`}</Typography>
                     {open?.caption && (
-                      <Typography sx={{ fontSize: 14 }}>
+                      <Typography sx={{ fontSize: 14, color: 'white' }}>
                         Caption: {open?.caption}
                       </Typography>
                     )}
                     {open?.description && (
-                      <Typography sx={{ fontSize: 14 }}>
+                      <Typography sx={{ fontSize: 14, color: 'white' }}>
                         Description: {open?.description}
                       </Typography>
                     )}
                     <Typography
                       onClick={() => setDetails(false)}
                       component={"div"}
-                      sx={{ fontSize: 14, cursor: "pointer" }}
+                      sx={{ fontSize: 14, cursor: "pointer",color: 'white' }}
                     >
                       <u>Hide Details</u>
                     </Typography>
@@ -243,9 +254,17 @@ const ImageFullScreen = ({
               }}
             >
               <IconButton
-                disabled={index >= sizeOfArray - 1 || !loading}
+                disabled={states[open.link] || !loading}
                 onClick={() =>
                   setIndex((prev) => {
+                    if (prev + 1 === sizeOfArray && !states[open.year]) {
+                      setValue((prev) => {
+                        return {
+                          ...prev,
+                          page: prev.page + 1,
+                        };
+                      });
+                    }
                     return Math.min(sizeOfArray - 1, prev + 1);
                   })
                 }
