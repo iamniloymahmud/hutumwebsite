@@ -14,6 +14,9 @@ const imageSlice = createSlice({
             }else{
                 state.images[action.payload.year] = action.payload.data;
             }
+            if(action?.payload?.data?.length == 0){
+                state[action.payload.year] = true;
+            }
             // state.images[action.payload.year] = action.payload.data;
         },
         clearImage: (state,action) => {

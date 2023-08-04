@@ -83,7 +83,12 @@ const ImageHome = () => {
           <CircularProgrssBar />
         </Box>
       )}
-      {value && <ImageGrid year={value.year} />}
+
+      {/* Full Image Grid  */}
+      
+      {value && <ImageGrid year={value.year} value={allLoading} setValue={setValue} />}
+      
+      {/* Loading Button  */}
       <Box
         width={"100%"}
         py={"1rem"}

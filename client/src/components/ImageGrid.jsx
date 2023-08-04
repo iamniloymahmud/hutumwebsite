@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 import CircularProgrssBar from "./CircularProgrssBar";
 
 
-const ImageGrid = ({ year }) => {
+const ImageGrid = ({ year, value, setValue }) => {
   const theme = useTheme();
   const images = useSelector((state) => state?.image?.images);
   const [modal, setModal] = useState(false);
@@ -79,7 +79,7 @@ const ImageGrid = ({ year }) => {
           <CircularProgrssBar />
         </Box>
       )}
-      {modal && <ImageFullScreen handleClose={setModal} open={images[year][index]} isOpen={modal} setIndex={setIndex} index={index} sizeOfArray={sizeOfArray} />}
+      {modal && <ImageFullScreen handleClose={setModal} open={images[year][index]} isOpen={modal} value={value} setValue={setValue} setIndex={setIndex} index={index} sizeOfArray={sizeOfArray} />}
     </Box>
   );
 };
