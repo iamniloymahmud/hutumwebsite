@@ -10,6 +10,7 @@ import { useGetHeroMoviesQuery, useGetPopluarMoviesQuery } from "./redux/endPoin
 import Series from './screens/series/Series';
 import About from './screens/about/About';
 import ImageHome from './screens/gallery/ImageHome';
+import MainHome from "./screens/mainHome/MainHome";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -35,7 +36,8 @@ function App() {
           <CssBaseline />
           <Routes>
             <Route element={<Layout />}>
-              <Route path="/" element={<Navigate to={"/movies"} replace />} />
+              <Route path="/" element={<Navigate to={"/home"} />} replace />
+              <Route path="/home" element={<MainHome />} />
               <Route path="/movies" element={<Home />} />
               <Route path="/series" element={<Series />} />
               <Route path="/Beautiful_KUET" element={<ImageHome />} />

@@ -17,19 +17,24 @@ import {
   LocalMoviesOutlined,
   LiveTvOutlined,
   Park,
-  ArrowCircleUp
+  ArrowCircleUp,
+  HouseSiding,
 } from "@mui/icons-material";
 import FlexBetween from "./FlexBetween";
 
 const navItems = [
   {
+    text: "Home",
+    icon: <HouseSiding />
+  },
+  {
     text: "Movies",
     icon: <LocalMoviesOutlined />,
   },
-  {
-    text: "Series",
-    icon: <LiveTvOutlined />,
-  },
+  // {
+  //   text: "Series",
+  //   icon: <LiveTvOutlined />,
+  // },
   {
     text: "Beautiful_KUET",
     icon: <Park />,
