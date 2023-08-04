@@ -14,9 +14,9 @@ const ImageFullScreen = ({
   sizeOfArray,
   setIndex,
   value,
-  setValue
+  setValue,
 }) => {
-  const states = useSelector(state => state.image);
+  const states = useSelector((state) => state.image);
   const [loading, setLoading] = useState(false);
   const [details, setDetails] = useState(false);
 
@@ -51,13 +51,13 @@ const ImageFullScreen = ({
     }
     if (isLeftSwipe && distanceX > distanceY) {
       setIndex((prev) => {
-        if((prev+1 === sizeOfArray) && !states[open.year]){
+        if (prev + 1 === sizeOfArray && !states[open.year]) {
           setValue((prev) => {
             return {
               ...prev,
-              page: prev.page+1,
-            }
-          })
+              page: prev.page + 1,
+            };
+          });
         }
         return Math.min(sizeOfArray - 1, prev + 1);
       });
@@ -115,20 +115,22 @@ const ImageFullScreen = ({
           {(!loading || value) && <CircularProgrssBar />}
           <Box padding={0} sx={{ margin: 0, padding: 0, position: "relative" }}>
             {/* Image Show */}
-            {!value && <Box
-              onTouchStart={onTouchStart}
-              onTouchEnd={onTouchEnd}
-              onTouchMove={onTouchMove}
-              component={"img"}
-              maxWidth={window.innerWidth}
-              maxHeight={window.innerHeight}
-              onLoad={() => setLoading(true)}
-              src={open?.link}
-              sx={{
-                padding: 0,
-                display: loading ? "" : "none",
-              }}
-            />}
+            {!value && (
+              <Box
+                onTouchStart={onTouchStart}
+                onTouchEnd={onTouchEnd}
+                onTouchMove={onTouchMove}
+                component={"img"}
+                maxWidth={window.innerWidth}
+                maxHeight={window.innerHeight}
+                onLoad={() => setLoading(true)}
+                src={open?.link}
+                sx={{
+                  padding: 0,
+                  display: loading ? "" : "none",
+                }}
+              />
+            )}
 
             {/* Full Details */}
             {hide && (
@@ -198,7 +200,7 @@ const ImageFullScreen = ({
 
           {/* Close Button */}
 
-          {(
+          {hide && (
             <Box sx={{ position: "absolute", top: 2, right: 2 }}>
               <IconButton onClick={() => handleClose(false)}>
                 <Close fontSize="large" sx={{ color: "white" }} />
@@ -231,25 +233,27 @@ const ImageFullScreen = ({
 
           {/* Right Button */}
 
-          <Box
-            sx={{
-              position: "absolute",
-              bottom: 2,
-              right: 1,
-              transform: "translate(0,-50%)",
-            }}
-          >
-            <IconButton
-              disabled={index >= sizeOfArray - 1 || !loading}
-              onClick={() =>
-                setIndex((prev) => {
-                  return Math.min(sizeOfArray - 1, prev + 1);
-                })
-              }
+          {hide && (
+            <Box
+              sx={{
+                position: "absolute",
+                bottom: 2,
+                right: 1,
+                transform: "translate(0,-50%)",
+              }}
             >
-              <ArrowCircleRight sx={{ color: "white" }} fontSize="large" />
-            </IconButton>
-          </Box>
+              <IconButton
+                disabled={index >= sizeOfArray - 1 || !loading}
+                onClick={() =>
+                  setIndex((prev) => {
+                    return Math.min(sizeOfArray - 1, prev + 1);
+                  })
+                }
+              >
+                <ArrowCircleRight sx={{ color: "white" }} fontSize="large" />
+              </IconButton>
+            </Box>
+          )}
         </Box>
       }
     </Modal>
