@@ -9,9 +9,15 @@ import {
 } from "@mui/material";
 import { Chat, LiveTv, LocalSee, OndemandVideo } from "@mui/icons-material";
 import { Typewriter } from "react-simple-typewriter";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import Chatbot from "../../components/HomeCarosel/Chatbot";
+import Movie from "../../components/HomeCarosel/Movie";
+import Photo from "../../components/HomeCarosel/Photo";
 const imageUrl =
   "https://bmeboss.files.wordpress.com/2023/08/hutum-removebg-preview-1-1.png";
+
+const ss = 0.25;
+
 const MainHome = () => {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -19,6 +25,9 @@ const MainHome = () => {
     theme.breakpoints.customCol[
       theme.breakpoints.screenBreakPoint(useMediaQuery, theme)
     ];
+  // console.log(theme.breakpoints.screenBreakPoint(useMediaQuery, theme));
+  // console.log(theme.breakpoints.values[theme.breakpoints.screenBreakPoint(useMediaQuery, theme)]);
+  console.log(window.innerWidth);
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <Box m={"1.5rem 1rem"} pt={"2.8rem"}>
@@ -58,7 +67,7 @@ const MainHome = () => {
             <Typography
               sx={{
                 fontWeight: "bold",
-                fontSize: Math.max(50, 17 * screenSize),
+                fontSize: Math.max(50, 15 * screenSize),
                 textAlign: "center",
               }}
             >
@@ -67,13 +76,18 @@ const MainHome = () => {
             <Typography
               sx={{
                 fontWeight: "bold",
-                fontSize: Math.max(45, 17 * screenSize),
+                fontSize: Math.max(40, 15 * screenSize),
                 color: "#FF1A1A",
                 textAlign: "center",
               }}
             >
               <Typewriter
-                words={["A Chatbot", "An Entermaint Server", "A Photo archive"]}
+                words={[
+                  "A Chatbot",
+                  "A Note Source",
+                  "An Movie Server",
+                  "A Photo Archive",
+                ]}
                 loop={false}
                 cursor
                 cursorStyle="_"
@@ -90,64 +104,63 @@ const MainHome = () => {
             flexDirection: isMobile ? "column" : "row",
             gap: 4,
             pt: 5,
-            justifyContent: "space-around",
             alignItems: "center",
-            width: "90%",
+            justifyContent: "space-around",
+            width: "100%",
           }}
         >
+          {/* Bottom Hero */}
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
+              width: !isMobile ? window.innerWidth*ss : window.innerWidth*0.7,
+              overflow: "hidden",
             }}
           >
-            <Link href="https://www.facebook.com/iamhutum" target="_blank" rel="noreferrer">
-            <IconButton sx={{ py: 4, px: 2 }}>
-              <Chat
-                style={{
-                  fontSize: "6rem",
-                  color: "#FF1A1A",
-                }}
-              />
-            </IconButton>
+            <Link
+              href="https://www.facebook.com/iamhutum"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Chatbot h={!isMobile ? window.innerWidth*ss : window.innerWidth*0.7} />
+              <Typography
+                variant="h1"
+                fontWeight={"bold"}
+                color={"#FF1A1A"}
+                textAlign={"center"}
+              >
+                Chatbot
+              </Typography>
             </Link>
-            <Typography variant="h1" fontWeight={"bold"} color={"#FF1A1A"}>
-              Chatbot
-            </Typography>
           </Box>
           <Box
+            component={'div'}
+            onClick={() => navigate('/movies')}
             sx={{
+              cursor: 'pointer',
               display: "flex",
               flexDirection: "column",
+              width: !isMobile ? window.innerWidth*ss : window.innerWidth*0.7,
             }}
           >
-            <IconButton onClick={() => navigate('/movies')} sx={{py: 4}}>
-              <OndemandVideo
-                style={{
-                  fontSize: "6rem",
-                  color: "#FF1A1A",
-                }}
-              />
-            </IconButton>
-            <Typography variant="h1" fontWeight={"bold"} color={"#FF1A1A"}>
+            <Movie h={!isMobile ? window.innerWidth*ss : window.innerWidth*0.7} />
+            <Typography variant="h1" fontWeight={"bold"} color={"#FF1A1A"} textAlign={'center'}>
               Movie Server
             </Typography>
           </Box>
           <Box
+            component={'div'}
+            onClick={() => navigate('/beautiful_kuet')}
             sx={{
+              cursor: 'pointer',
               display: "flex",
               flexDirection: "column",
+              width: !isMobile ? window.innerWidth*ss : window.innerWidth*0.7,
             }}
           >
-            <IconButton onClick={() => navigate('/beautiful_kuet')} sx={{ py: 4 }}>
-              <LocalSee
-                style={{
-                  fontSize: "6rem",
-                  color: "#FF1A1A",
-                }}
-              />
-            </IconButton>
-            <Typography variant="h1" fontWeight={"bold"} color={"#FF1A1A"}>
+            <Photo h={!isMobile ? window.innerWidth*ss : window.innerWidth*0.7} />
+            <Typography variant="h1" fontWeight={"bold"} color={"#FF1A1A"} textAlign={'center'}>
               Photo Archive
             </Typography>
           </Box>

@@ -33,9 +33,21 @@ const imageApis = api.injectEndpoints({
                     console.log(error.message);
                 }
             }
+        }),
+        heroImages: builder.mutation({
+            query: (data) => {
+                return {
+                    method: 'POST',
+                    url: '/images/all',
+                    body: {
+                        year: data.year,
+                        page: data.page,
+                    }
+                }
+            },
         })
     }),
     overrideExisting: true,
 });
 
-export const {useGetYearsQuery, useGetImagesByYearMutation} = imageApis;
+export const {useGetYearsQuery, useGetImagesByYearMutation, useHeroImagesMutation} = imageApis;

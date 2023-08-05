@@ -1,4 +1,4 @@
-import { Modal, Box, IconButton, Button, Typography } from "@mui/material";
+import { Modal, Box, IconButton, Button, Typography, useTheme, useMediaQuery } from "@mui/material";
 import { Close, ArrowCircleRight, ArrowCircleLeft } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
@@ -19,12 +19,12 @@ const ImageFullScreen = ({
   const states = useSelector((state) => state.image);
   const [loading, setLoading] = useState(false);
   const [details, setDetails] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const [hide, setHide] = useState(true);
-  // console.log(sizeOfArray);
-  // swipte Distance
   const minSwipeDistance = 50;
 
   const onTouchStart = (e) => {
@@ -199,7 +199,7 @@ const ImageFullScreen = ({
                     <Typography
                       onClick={() => setDetails(false)}
                       component={"div"}
-                      sx={{ fontSize: 14, cursor: "pointer",color: 'white' }}
+                      sx={{ fontSize: 14, cursor: "pointer",color: 'white', textAlign: 'end', pr: 1 }}
                     >
                       <u>Hide Details</u>
                     </Typography>
@@ -220,7 +220,7 @@ const ImageFullScreen = ({
           )}
 
           {/* Left Button */}
-          {hide && (
+          {hide && !isMobile && (
             <Box
               sx={{
                 position: "absolute",
@@ -244,7 +244,7 @@ const ImageFullScreen = ({
 
           {/* Right Button */}
 
-          {hide && (
+          {hide && !isMobile && (
             <Box
               sx={{
                 position: "absolute",
