@@ -47,7 +47,8 @@ const ImageGrid = ({ year, value, setValue }) => {
             >
               <img
                 src={`${item.link}?w=550`}
-                alt={item.caption}
+                alt={`${item.place_tag} in KUET Campus`}
+                loading="lazy"
                 style={{ objectFit: "cover", borderRadius: "0.55rem" }}
               />
               <ImageListItemBar

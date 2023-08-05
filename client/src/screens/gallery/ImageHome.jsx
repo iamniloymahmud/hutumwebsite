@@ -19,6 +19,7 @@ import {
 } from "../../redux/endPoints/image/image";
 import { useSelector } from "react-redux";
 import CircularProgrssBar from "../../components/CircularProgrssBar";
+import { Helmet } from "react-helmet-async";
 
 const ImageHome = () => {
   const theme = useTheme();
@@ -46,6 +47,14 @@ const ImageHome = () => {
   });
   return (
     <Box m={"1.5rem 1rem"} pt={"2.8rem"}>
+      <Helmet>
+        <title>Photos | HUTUM</title>
+        <meta
+          name="description"
+          content="HUTUM stores and share beautiful pictures of KUET campus taken by the fellow KUETian. You will find one of the most beautiful photos of KUET"
+        />
+        <link rel="canonical" href="/#/beautiful_kuet" />
+      </Helmet>
       {!isLoading ? (
         <FlexBetween>
           <Header key={"1815003"} title={"Beauties of KUET"} />
@@ -85,9 +94,11 @@ const ImageHome = () => {
       )}
 
       {/* Full Image Grid  */}
-      
-      {value && <ImageGrid year={value.year} value={allLoading} setValue={setValue} />}
-      
+
+      {value && (
+        <ImageGrid year={value.year} value={allLoading} setValue={setValue} />
+      )}
+
       {/* Loading Button  */}
       <Box
         width={"100%"}

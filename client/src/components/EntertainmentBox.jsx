@@ -34,7 +34,8 @@ const EntertainmentBox = ({data}) => {
       <CardContent>
         <Box
           component={"img"}
-          alt="hutum-kuet"
+          alt="hutum-kuet kuet movie hutum"
+          loading="lazy"
           src={data?.backdrop_path ? `https://image.tmdb.org/t/p/original/${data?.backdrop_path}` : moviePic}
           width={"100%"}
           height={"100%"}

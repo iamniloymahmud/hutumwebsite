@@ -41,7 +41,8 @@ const Hero = () => {
                 >
                   <Box
                     component={"img"}
-                    alt="hutum-kuet"
+                    alt="hutum-kuet movie hutum kuet"
+                    loading="lazy"
                     src={`https://image.tmdb.org/t/p/original/${data?.backdrop_path}`}
                     width={"100%"}
                     height={"100%"}

@@ -22,6 +22,8 @@ const Chatbot = ({h}) => {
           <Box height={"100%"}>
             <Box
               component={"img"}
+              alt="HUTUM KUET Chatbot"
+              loading="lazy"
               src={image.url}
               width={"100%"}
               height={"100%"}

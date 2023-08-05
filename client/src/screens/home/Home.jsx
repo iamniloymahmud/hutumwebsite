@@ -15,6 +15,7 @@ import Hero from "../../components/Hero";
 import EntertainmentBox from "../../components/EntertainmentBox";
 import Header from "../../components/Header";
 import MovieModal from "../../components/MovieModal";
+import { Helmet } from "react-helmet-async";
 const Home = () => {
   const theme = useTheme();
   const [page, setPage] = useState(1);
@@ -32,7 +33,15 @@ const Home = () => {
   const state = useSelector((state) => state?.movie || {});
 
   return state?.heroMovies && state?.allMovies && state?.popularMovies ? (
-    <Box m={"1.5rem 1rem"} pt={'2rem'}>
+    <Box m={"1.5rem 1rem"} pt={"2rem"}>
+      <Helmet>
+        <title>Movies | HUTUM</title>
+        <meta
+          name="description"
+          content="HUTUM provides free movies without any ADs. This is only for sharing movie files internally. We don't make any money from this."
+        />
+        <link rel="canonical" href="/#/movies" />
+      </Helmet>
       <Box
         mt={"20px"}
         display={"grid"}

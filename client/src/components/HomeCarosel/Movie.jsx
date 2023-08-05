@@ -27,6 +27,8 @@ const Movie = ({ h }) => {
             <Box height={"100%"} position={"relative"}>
               <Box
                 component={"img"}
+                alt="HUTUM KUET movie service server"
+                loading="lazy"
                 src={`https://image.tmdb.org/t/p/original/${image?.backdrop_path}`}
                 width={"100%"}
                 height={"100%"}

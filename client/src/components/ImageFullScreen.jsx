@@ -129,6 +129,8 @@ const ImageFullScreen = ({
                 onTouchEnd={onTouchEnd}
                 onTouchMove={onTouchMove}
                 component={"img"}
+                title={open.place_tag}
+                alt={`${open.place_tag} in KUET`}
                 maxWidth={window.innerWidth}
                 maxHeight={window.innerHeight}
                 onLoad={() => setLoading(true)}

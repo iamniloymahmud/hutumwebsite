@@ -29,6 +29,8 @@ const Photo = ({ h }) => {
         return (
           <Box height={"100%"} position={"relative"}>
             <Box
+              alt="Beautiful photos of KUET KUET Photos"
+              loading="lazy"
               component={"img"}
               src={`${image.link}?w=550`}
               width={"100%"}

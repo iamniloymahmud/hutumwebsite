@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import Chatbot from "../../components/HomeCarosel/Chatbot";
 import Movie from "../../components/HomeCarosel/Movie";
 import Photo from "../../components/HomeCarosel/Photo";
+import { Helmet } from "react-helmet-async";
 const imageUrl =
   "https://bmeboss.files.wordpress.com/2023/08/hutum-removebg-preview-1-1.png";
 
@@ -28,6 +29,11 @@ const MainHome = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <Box m={"1.5rem 1rem"} pt={"2.8rem"}>
+      <Helmet>
+        <title>Home | HUTUM</title>
+        <meta name="description" content="HUTUM is an organization that cater the needs of notes, books and movies of the students of KUET. It also has a vast number of photo collection of KUET Campus. " />
+        <link rel="canonical" href="/#/home" />
+      </Helmet>
       <Box
         sx={{
           width: "100%",
@@ -38,7 +44,9 @@ const MainHome = () => {
       >
         <Box
           component={"img"}
+          alt="HUTUM KUET Logo"
           src={imageUrl}
+          loading="lazy"
           width={252 * 0.7}
           height={460 * 0.7}
           sx={{
