@@ -13,7 +13,6 @@ const Photo = ({ h }) => {
       page: 1,
     });
   }, []);
-  console.log(data);
   return data ? (
     <Carousel
       interval={3500}

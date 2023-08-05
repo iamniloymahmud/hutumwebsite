@@ -8,7 +8,6 @@ import moment from 'moment';
 const Movie = ({ h }) => {
   const theme = useTheme();
   const images = useSelector((state) => state.movie.heroMovies);
-  console.log(images);
   return images ? (
     <Carousel
       interval={3000}

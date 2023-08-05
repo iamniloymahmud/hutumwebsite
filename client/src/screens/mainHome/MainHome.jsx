@@ -25,9 +25,6 @@ const MainHome = () => {
     theme.breakpoints.customCol[
       theme.breakpoints.screenBreakPoint(useMediaQuery, theme)
     ];
-  // console.log(theme.breakpoints.screenBreakPoint(useMediaQuery, theme));
-  // console.log(theme.breakpoints.values[theme.breakpoints.screenBreakPoint(useMediaQuery, theme)]);
-  console.log(window.innerWidth);
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <Box m={"1.5rem 1rem"} pt={"2.8rem"}>
@@ -85,7 +82,7 @@ const MainHome = () => {
                 words={[
                   "A Chatbot",
                   "A Note Source",
-                  "An Movie Server",
+                  "A Movie Server",
                   "A Photo Archive",
                 ]}
                 loop={false}

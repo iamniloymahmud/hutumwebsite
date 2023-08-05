@@ -73,10 +73,7 @@ const ImageFullScreen = ({
       }
       if (e.key === "ArrowRight") {
         setIndex((prev) => {
-          // console.log(prev);
           if (prev + 1 === sizeOfArray && !states[open.year]) {
-            console.log(sizeOfArray);
-            console.log('hello');
             setValue((prev) => {
               return {
                 ...prev,
