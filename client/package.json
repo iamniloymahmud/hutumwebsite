@@ -15,6 +15,7 @@
     "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.131",
     "@mui/material": "^5.13.2",
+    "@mui/x-date-pickers": "^6.11.0",
     "@reduxjs/toolkit": "^1.9.5",
     "iso-639-1": "^2.1.15",
     "moment": "^2.29.4",

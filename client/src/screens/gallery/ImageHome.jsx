@@ -79,7 +79,7 @@ const ImageHome = () => {
                 label="Select Year"
                 InputLabelProps={{
                   style: {
-                    color: theme.palette.text.primary,
+                    color: theme.palette.text.secondary,
                     fontSize: "1rem",
                   },
                 }}

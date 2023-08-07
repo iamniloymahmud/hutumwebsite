@@ -45,9 +45,18 @@ const imageApis = api.injectEndpoints({
                     }
                 }
             },
+        }),
+        sendPhoto: builder.mutation({
+            query: (data) => {
+                return {
+                    method: "POST",
+                    url: "/images/upload",
+                    body: data,
+                }
+            }
         })
     }),
     overrideExisting: true,
 });
 
-export const {useGetYearsQuery, useGetImagesByYearMutation, useHeroImagesMutation} = imageApis;
+export const {useGetYearsQuery, useGetImagesByYearMutation, useHeroImagesMutation, useSendPhotoMutation} = imageApis;

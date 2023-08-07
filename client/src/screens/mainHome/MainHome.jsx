@@ -27,11 +27,15 @@ const MainHome = () => {
       theme.breakpoints.screenBreakPoint(useMediaQuery, theme)
     ];
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  // console.log(theme.palette);
   return (
     <Box m={"1.5rem 1rem"} pt={"2.8rem"}>
       <Helmet>
         <title>Home | HUTUM</title>
-        <meta name="description" content="HUTUM is an organization that cater the needs of notes, books and movies of the students of KUET. It also has a vast number of photo collection of KUET Campus. " />
+        <meta
+          name="description"
+          content="HUTUM is an organization that cater the needs of notes, books and movies of the students of KUET. It also has a vast number of photo collection of KUET Campus. "
+        />
         <link rel="canonical" href="/#/home" />
       </Helmet>
       <Box
@@ -119,7 +123,9 @@ const MainHome = () => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              width: !isMobile ? window.innerWidth*ss : window.innerWidth*0.7,
+              width: !isMobile
+                ? window.innerWidth * ss
+                : window.innerWidth * 0.7,
               overflow: "hidden",
             }}
           >
@@ -127,12 +133,15 @@ const MainHome = () => {
               href="https://www.facebook.com/iamhutum"
               target="_blank"
               rel="noreferrer"
+              style={{ textDecoration: "none" }}
             >
-              <Chatbot h={!isMobile ? window.innerWidth*ss : window.innerWidth*0.7} />
+              <Chatbot
+                h={!isMobile ? window.innerWidth * ss : window.innerWidth * 0.7}
+              />
               <Typography
                 variant="h1"
                 fontWeight={"bold"}
-                color={"#FF1A1A"}
+                color={theme.palette.text.primary}
                 textAlign={"center"}
               >
                 Chatbot
@@ -140,32 +149,50 @@ const MainHome = () => {
             </Link>
           </Box>
           <Box
-            component={'div'}
-            onClick={() => navigate('/movies')}
+            component={"div"}
+            onClick={() => navigate("/movies")}
             sx={{
-              cursor: 'pointer',
+              cursor: "pointer",
               display: "flex",
               flexDirection: "column",
-              width: !isMobile ? window.innerWidth*ss : window.innerWidth*0.7,
+              width: !isMobile
+                ? window.innerWidth * ss
+                : window.innerWidth * 0.7,
             }}
           >
-            <Movie h={!isMobile ? window.innerWidth*ss : window.innerWidth*0.7} />
-            <Typography variant="h1" fontWeight={"bold"} color={"#FF1A1A"} textAlign={'center'}>
+            <Movie
+              h={!isMobile ? window.innerWidth * ss : window.innerWidth * 0.7}
+            />
+            <Typography
+              variant="h1"
+              fontWeight={"bold"}
+              // color={"#FF1A1A"}
+              textAlign={"center"}
+            >
               Movie Server
             </Typography>
           </Box>
           <Box
-            component={'div'}
-            onClick={() => navigate('/beautiful_kuet')}
+            component={"div"}
+            onClick={() => navigate("/beautiful_kuet")}
             sx={{
-              cursor: 'pointer',
+              cursor: "pointer",
               display: "flex",
               flexDirection: "column",
-              width: !isMobile ? window.innerWidth*ss : window.innerWidth*0.7,
+              width: !isMobile
+                ? window.innerWidth * ss
+                : window.innerWidth * 0.7,
             }}
           >
-            <Photo h={!isMobile ? window.innerWidth*ss : window.innerWidth*0.7} />
-            <Typography variant="h1" fontWeight={"bold"} color={"#FF1A1A"} textAlign={'center'}>
+            <Photo
+              h={!isMobile ? window.innerWidth * ss : window.innerWidth * 0.7}
+            />
+            <Typography
+              variant="h1"
+              fontWeight={"bold"}
+              // color={"#FF1A1A"}
+              textAlign={"center"}
+            >
               Photo Archive
             </Typography>
           </Box>

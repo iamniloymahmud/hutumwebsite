@@ -19,6 +19,7 @@ import {
   Park,
   ArrowCircleUp,
   HouseSiding,
+  UploadFile
 } from "@mui/icons-material";
 import FlexBetween from "./FlexBetween";
 
@@ -38,6 +39,10 @@ const navItems = [
   {
     text: "Beautiful_KUET",
     icon: <Park />,
+  },
+  {
+    text: "Upload_Photo",
+    icon: <UploadFile />,
   },
 ];
 
