@@ -60,7 +60,7 @@ const UploadPhoto = () => {
         flexDirection: "column",
         display: "flex",
         my: "4.5rem",
-        pt: "2rem",
+        py: "2rem",
       }}
     >
       <Header title={"Submit Your Photo to HUTUM"} />

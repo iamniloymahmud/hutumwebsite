@@ -2,12 +2,12 @@
 // KUET BME '18
 
 //External Imports
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
+//Schema
 
-//Schema 
-
-const imageSchema = mongoose.Schema({
+const imageSchema = mongoose.Schema(
+  {
     author: String,
     batch: String,
     dept: String,
@@ -17,14 +17,16 @@ const imageSchema = mongoose.Schema({
     link: String,
     place_tag: String,
     year: Number,
-});
-
+  },
+  {
+    timestamps: true,
+  }
+);
 
 //Model
 
-const imageModel = mongoose.model('Images', imageSchema);
-
+const imageModel = mongoose.model("Images", imageSchema);
 
 module.exports = {
-    imageModel,
-}
+  imageModel,
+};
