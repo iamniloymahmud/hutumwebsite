@@ -29,7 +29,7 @@ const MainHome = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   // console.log(theme.palette);
   return (
-    <Box m={"1.5rem 1rem"} pt={"2.8rem"}>
+    <Box m={"1.5rem 1rem"} py={"2.8rem"}>
       <Helmet>
         <title>Home | HUTUM</title>
         <meta
