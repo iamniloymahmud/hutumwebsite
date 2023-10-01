@@ -19,7 +19,8 @@ import {
   Park,
   ArrowCircleUp,
   HouseSiding,
-  UploadFile
+  UploadFile,
+  AlternateEmail
 } from "@mui/icons-material";
 import FlexBetween from "./FlexBetween";
 
@@ -43,6 +44,10 @@ const navItems = [
   {
     text: "Upload_Photo",
     icon: <UploadFile />,
+  },
+  {
+    text: "Add_KUET_Mail",
+    icon: <AlternateEmail />,
   },
 ];
 
@@ -87,6 +92,7 @@ const Sidebar = ({
               backgroundColor: theme.palette.background.default,
               paddingTop: '1rem',
               position: 'relative',
+              paddingBottom: '2rem',
             }}
             onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}

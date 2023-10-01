@@ -12,6 +12,7 @@ import About from './screens/about/About';
 import ImageHome from './screens/gallery/ImageHome';
 import MainHome from "./screens/mainHome/MainHome";
 import UploadPhoto from "./screens/upload/UploadPhoto";
+import MailHome from "./screens/mail/MailHome";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -43,6 +44,7 @@ function App() {
               <Route path="/series" element={<Series />} />
               <Route path="/Beautiful_KUET" element={<ImageHome />} />
               <Route path="/upload_photo" element={<UploadPhoto />} />
+              <Route path="/add_kuet_mail" element={<MailHome />} />
               <Route path="/about" element={<About />} />
             </Route>
           </Routes>
