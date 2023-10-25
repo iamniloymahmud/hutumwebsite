@@ -15,6 +15,7 @@ const { getData, getCounter, updateImages } = require("./util/uploader");
 const { movieRouter } = require("./routes/movieRoutes");
 const { errorHandler, notFound } = require("./controller/errorHandlers");
 const { imageRouter } = require("./routes/imageRoutes");
+const { emailRouter } = require("./routes/emailRoutes");
 
 //Configuration
 dotenv.config();
@@ -48,9 +49,11 @@ app.get("/", (req, res) => {
 });
 app.use("/movies", movieRouter);
 app.use("/images", imageRouter);
+app.use("/addMail", emailRouter)
 
 // getData();
 // updateImages();
+getCounter();
 
 //Error Handlers
 app.use(notFound);

@@ -52,7 +52,7 @@ const getCounter = async () => {
       return (prev += data.counter);
     }, 0);
     console.log(download);
-    console.log(moment(new Date("month-day-year")).format("DD MMMM, yyyy"));
+    // console.log(moment(new Date("month-day-year")).format("DD MMMM, yyyy"));
     // console.log(data);
   } catch (error) {
     console.log(error);

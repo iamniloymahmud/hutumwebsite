@@ -6,7 +6,8 @@ import {
   Typography,
   useTheme,
   Alert,
-  Snackbar
+  Snackbar,
+  LinearProgress
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
@@ -14,10 +15,12 @@ import { DatePicker } from "@mui/x-date-pickers";
 import { LoadingButton } from "@mui/lab";
 import moment from "moment";
 import { useSendPhotoMutation } from "../../redux/endPoints/image/image";
+import { useSelector } from "react-redux";
 
 const UploadPhoto = () => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const progress = useSelector(state => state?.image?.progress);
   const [sendPhoto, {data, isLoading, isError, error, isSuccess}] = useSendPhotoMutation();
   const [file, setFile] = useState('');
   const [name,setName] = useState('');
@@ -36,7 +39,10 @@ const UploadPhoto = () => {
     form.append('description', description);
     form.append('place', place);
     form.append('date', date.toISOString());
-    sendPhoto(form);
+    sendPhoto({
+      url: import.meta.env.VITE_APP_API,
+      data: form,
+    });
     // console.log(file,name,roll,caption,description,place,date);
   }  
 
@@ -50,8 +56,7 @@ const UploadPhoto = () => {
       setDescription('');
       setPlace('');
     }
-  }, [isSuccess])
-
+  }, [isSuccess]);
   return (
     <Container
       mx={"auto"}
@@ -197,8 +202,12 @@ const UploadPhoto = () => {
         <LoadingButton loading={isLoading} type="submit" color="success" variant="contained" >
           Submit
         </LoadingButton>
+        <Box width={'100%'}>
+          {progress && <LinearProgress variant="determinate" color="success" value={progress} />}
+          {progress && <Typography textAlign={'center'}>Uploading {progress}%</Typography>}
+        </Box>
       </Box>
-      <Snackbar open={open} autoHideDuration={3000} onClose={() => setOpen(false)}>
+      <Snackbar open={open} autoHideDuration={10000} onClose={() => setOpen(false)}>
         <Alert onClose={() => setOpen(false)} severity="success" sx={{ width: '100%' }}>
           {data?.msg}
         </Alert>

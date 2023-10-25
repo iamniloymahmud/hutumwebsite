@@ -1,5 +1,6 @@
 import api from "../../api/api";
-import { setImage, clearImage } from "../../slice/imageSlice";
+import { setImage, clearImage, setProgress, clearProgress } from "../../slice/imageSlice";
+import axios from 'axios';
 
 const imageApis = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -46,12 +47,38 @@ const imageApis = api.injectEndpoints({
                 }
             },
         }),
+        // sendPhoto: builder.mutation({
+        //     query: (data) => {
+        //         return {
+        //             method: "POST",
+        //             url: "/images/upload",
+        //             body: data,
+        //         }
+        //     }
+        // }),
         sendPhoto: builder.mutation({
-            query: (data) => {
-                return {
-                    method: "POST",
-                    url: "/images/upload",
-                    body: data,
+            queryFn: async ({url,data}, api, extraOptions, baseQuery) => {
+                try{
+                    const res = await axios.post(`${url}/images/upload`,data, {
+                        onUploadProgress: (upload) => {
+                            let onUploadProgress = Math.round((100*upload.loaded)/upload.total);
+                            api.dispatch(setProgress(onUploadProgress));
+                        }
+                    });
+                    api.dispatch(clearProgress());
+                    return {
+                        data: res.data,
+                    }
+                }catch(Error){
+                    // const Error = ax;
+                    // console.log(Error);
+                    api.dispatch(clearProgress());
+                    return {
+                        error: {
+                            status: Error?.response?.status,
+                            data: Error?.response?.data || Error?.message,
+                        }
+                    }
                 }
             }
         })
