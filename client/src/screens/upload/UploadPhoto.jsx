@@ -203,8 +203,8 @@ const UploadPhoto = () => {
           Submit
         </LoadingButton>
         <Box width={'100%'}>
-          {progress && <LinearProgress variant="determinate" color="success" value={progress} />}
-          {progress && <Typography textAlign={'center'}>Uploading {progress}%</Typography>}
+          {progress && <LinearProgress variant="determinate" color="success" value={progress-1} />}
+          {progress && <Typography textAlign={'center'}>Uploading {progress-1}%</Typography>}
         </Box>
       </Box>
       <Snackbar open={open} autoHideDuration={10000} onClose={() => setOpen(false)}>
