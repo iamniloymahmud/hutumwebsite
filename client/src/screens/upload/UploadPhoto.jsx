@@ -7,7 +7,8 @@ import {
   useTheme,
   Alert,
   Snackbar,
-  LinearProgress
+  LinearProgress,
+  Fade
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
@@ -29,8 +30,14 @@ const UploadPhoto = () => {
   const [description, setDescription] = useState('');
   const [place, setPlace] = useState('');
   const [date,setDate] = useState(moment(new Date().toISOString()));
+  const [faded,setFaded] = useState(false);
+  const processingTime = 1500;
+  let clock;
   const handleSubmit = (e) => {
     e.preventDefault();
+    clock = setInterval(() => {
+      setFaded((prev) => !prev);
+    }, [processingTime]);
     const form = new FormData();
     form.append('name', name);
     form.append('file', file);
@@ -56,6 +63,7 @@ const UploadPhoto = () => {
       setDescription('');
       setPlace('');
     }
+    clearInterval(clock);
   }, [isSuccess]);
   return (
     <Container
@@ -203,8 +211,9 @@ const UploadPhoto = () => {
           Submit
         </LoadingButton>
         <Box width={'100%'}>
-          {progress && <LinearProgress variant="determinate" color="success" value={progress-1} />}
-          {progress && <Typography textAlign={'center'}>Uploading {progress-1}%</Typography>}
+          {progress && progress != 100 && <LinearProgress variant="determinate" color="success" value={progress} />}
+          {progress && progress != 100 && <Typography textAlign={'center'}>Uploading {progress}%</Typography>}
+          {progress == 100 && <Fade in={faded} timeout={processingTime}><Typography variant="h5" textAlign={'center'} sx={{fontWeight: 'bold'}}>Processing Your Data</Typography></Fade>}
         </Box>
       </Box>
       <Snackbar open={open} autoHideDuration={10000} onClose={() => setOpen(false)}>
