@@ -8,7 +8,7 @@ import {
   Alert,
   Snackbar,
   LinearProgress,
-  Fade
+  Fade,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
@@ -17,53 +17,48 @@ import { LoadingButton } from "@mui/lab";
 import moment from "moment";
 import { useSendPhotoMutation } from "../../redux/endPoints/image/image";
 import { useSelector } from "react-redux";
+import UploadModal from "../../components/UploadModal";
 
 const UploadPhoto = () => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const progress = useSelector(state => state?.image?.progress);
-  const [sendPhoto, {data, isLoading, isError, error, isSuccess}] = useSendPhotoMutation();
-  const [file, setFile] = useState('');
-  const [name,setName] = useState('');
-  const [roll, setRoll] = useState('');
-  const [caption, setCaption] = useState('');
-  const [description, setDescription] = useState('');
-  const [place, setPlace] = useState('');
-  const [date,setDate] = useState(moment(new Date().toISOString()));
-  const [faded,setFaded] = useState(false);
-  const processingTime = 1500;
-  let clock;
+  const progress = useSelector((state) => state?.image?.progress);
+  const [sendPhoto, { data, isLoading, isError, error, isSuccess }] =
+    useSendPhotoMutation();
+  const [file, setFile] = useState("");
+  const [name, setName] = useState("");
+  const [roll, setRoll] = useState("");
+  const [caption, setCaption] = useState("");
+  const [description, setDescription] = useState("");
+  const [place, setPlace] = useState("");
+  const [date, setDate] = useState(moment(new Date().toISOString()));
   const handleSubmit = (e) => {
     e.preventDefault();
-    clock = setInterval(() => {
-      setFaded((prev) => !prev);
-    }, [processingTime]);
     const form = new FormData();
-    form.append('name', name);
-    form.append('file', file);
-    form.append('roll', roll);
-    form.append('caption', caption);
-    form.append('description', description);
-    form.append('place', place);
-    form.append('date', date.toISOString());
+    form.append("name", name);
+    form.append("file", file);
+    form.append("roll", roll);
+    form.append("caption", caption);
+    form.append("description", description);
+    form.append("place", place);
+    form.append("date", date.toISOString());
     sendPhoto({
       url: import.meta.env.VITE_APP_API,
       data: form,
     });
     // console.log(file,name,roll,caption,description,place,date);
-  }  
+  };
 
   useEffect(() => {
-    if(isSuccess){
+    if (isSuccess) {
       setOpen(true);
-      setName('');
-      setFile('');
-      setRoll('');
-      setCaption('');
-      setDescription('');
-      setPlace('');
+      setName("");
+      setFile("");
+      setRoll("");
+      setCaption("");
+      setDescription("");
+      setPlace("");
     }
-    clearInterval(clock);
   }, [isSuccess]);
   return (
     <Container
@@ -97,7 +92,9 @@ const UploadPhoto = () => {
           required
           label="Full Name"
           error={error?.data?.name}
-          helperText={error?.data?.name ? error?.data?.name?.msg :"Certificate Name"}
+          helperText={
+            error?.data?.name ? error?.data?.name?.msg : "Certificate Name"
+          }
           value={name}
           onChange={(e) => setName(e.target.value)}
           InputLabelProps={{
@@ -116,7 +113,9 @@ const UploadPhoto = () => {
           label="Roll Number"
           type="number"
           error={error?.data?.roll}
-          helperText={error?.data?.roll ? error?.data?.roll?.msg :"KUET Roll Number"}
+          helperText={
+            error?.data?.roll ? error?.data?.roll?.msg : "KUET Roll Number"
+          }
           InputLabelProps={{
             style: {
               color: theme.palette.text.primary,
@@ -132,7 +131,11 @@ const UploadPhoto = () => {
           onChange={(e) => setCaption(e.target.value)}
           label="Caption"
           error={error?.data?.caption}
-          helperText={error?.data?.caption ? error?.data?.caption?.msg :"Your caption of the photo"}
+          helperText={
+            error?.data?.caption
+              ? error?.data?.caption?.msg
+              : "Your caption of the photo"
+          }
           InputLabelProps={{
             style: {
               color: theme.palette.text.primary,
@@ -147,7 +150,11 @@ const UploadPhoto = () => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           error={error?.data?.description}
-          helperText={error?.data?.description ? error?.data?.description?.msg :"Express why you captured that moment"}
+          helperText={
+            error?.data?.description
+              ? error?.data?.description?.msg
+              : "Express why you captured that moment"
+          }
           InputLabelProps={{
             style: {
               color: theme.palette.text.primary,
@@ -162,7 +169,11 @@ const UploadPhoto = () => {
           value={place}
           onChange={(e) => setPlace(e.target.value)}
           error={error?.data?.place}
-          helperText={error?.data?.place ? error?.data?.place?.msg :"Where did you capture this photo"}
+          helperText={
+            error?.data?.place
+              ? error?.data?.place?.msg
+              : "Where did you capture this photo"
+          }
           required
           InputLabelProps={{
             style: {
@@ -175,7 +186,7 @@ const UploadPhoto = () => {
         {/* Date Picker */}
         <DatePicker
           value={date}
-          onChange={(newValue) => setDate(newValue)}  
+          onChange={(newValue) => setDate(newValue)}
           sx={{
             label: {
               color: theme.palette.text.primary,
@@ -190,11 +201,18 @@ const UploadPhoto = () => {
         />
         <Box width={"320px"}>
           <Button
-            sx={{ width: "100%", borderColor: error?.data?.file ? 'red' : theme.palette.text.primary }}
+            sx={{
+              width: "100%",
+              borderColor: error?.data?.file
+                ? "red"
+                : theme.palette.text.primary,
+            }}
             variant="outlined"
             component="label"
           >
-            <Typography color={error?.data?.file ? 'red' : theme.palette.text.primary}>
+            <Typography
+              color={error?.data?.file ? "red" : theme.palette.text.primary}
+            >
               Upload Photo
             </Typography>
             <input
@@ -205,19 +223,33 @@ const UploadPhoto = () => {
             />
           </Button>
           {file && <Typography textAlign={"right"}>{file?.name}</Typography>}
-          {error?.data?.file && <Typography textAlign={"left"} color={'red'}>{error?.data?.file?.msg}</Typography>}
+          {error?.data?.file && (
+            <Typography textAlign={"left"} color={"red"}>
+              {error?.data?.file?.msg}
+            </Typography>
+          )}
         </Box>
-        <LoadingButton loading={isLoading} type="submit" color="success" variant="contained" >
+        <LoadingButton
+          loading={isLoading}
+          type="submit"
+          color="success"
+          variant="contained"
+        >
           Submit
         </LoadingButton>
-        <Box width={'100%'}>
-          {progress && progress != 100 && <LinearProgress variant="determinate" color="success" value={progress} />}
-          {progress && progress != 100 && <Typography textAlign={'center'}>Uploading {progress}%</Typography>}
-          {progress == 100 && <Fade in={faded} timeout={processingTime}><Typography variant="h5" textAlign={'center'} sx={{fontWeight: 'bold'}}>Processing Your Data</Typography></Fade>}
-        </Box>
+        {progress && <UploadModal progress={progress} />}
       </Box>
-      <Snackbar open={open} autoHideDuration={10000} onClose={() => setOpen(false)}>
-        <Alert onClose={() => setOpen(false)} severity="success" sx={{ width: '100%' }}>
+      <Snackbar
+        open={open}
+        autoHideDuration={10000}
+        onClose={() => setOpen(false)}
+        anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
           {data?.msg}
         </Alert>
       </Snackbar>
