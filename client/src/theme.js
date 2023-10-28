@@ -59,6 +59,17 @@ function reverseTokens(tokensDark) {
 }
 export const tokensLight = reverseTokens(tokensDark);
 
+//Screen Values
+const values = {
+  lg: 1200,
+  md: 900,
+  xmd: 720,
+  sm: 600,
+  xs: 0,
+  xsm: 420,
+  xl: 1536
+}
+
 // mui theme settings
 export const themeSettings = (mode) => {
   return {
@@ -138,34 +149,23 @@ export const themeSettings = (mode) => {
     breakpoints: {
       customCol: {
         xs: 1, //0
+        xsm: 1, //320
         sm: 2, //600
+        xmd: 2, //720
         md: 3, //900
         lg: 3, //1200
         xl: 4, //1536
       },
+      values: {
+        ...values,
+      },
       screenBreakPoint: (useMediaQuery, theme) => {
-        const mq_xs = useMediaQuery(theme.breakpoints.only("xs"));
-        const mq_sm = useMediaQuery(theme.breakpoints.only("sm"));
-        const mq_md = useMediaQuery(theme.breakpoints.only("md"));
-        const mq_lg = useMediaQuery(theme.breakpoints.only("lg"));
-        const mq_xl = useMediaQuery(theme.breakpoints.only("xl"));
-        
-        if (mq_xs) {
-          return "xs";
-        }
-        if (mq_sm) {
-          return "sm";
-        }
-        if (mq_md) {
-          return "md";
-        }
-        if (mq_lg) {
-          return "lg";
-        }
-        if (mq_xl) {
-          return "xl";
-        }
-        
+        const ans = Object.keys(values).map((key) => {
+          if(useMediaQuery(theme.breakpoints.only(key))){
+            return key;
+          }
+        }).filter(data => data);
+        return ans[0];
       },
     },
   };

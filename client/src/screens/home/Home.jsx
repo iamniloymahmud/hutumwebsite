@@ -6,6 +6,7 @@ import {
   useMediaQuery,
   CircularProgress,
   Fab,
+  Grid,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { useTheme } from "@emotion/react";
@@ -16,14 +17,14 @@ import EntertainmentBox from "../../components/EntertainmentBox";
 import Header from "../../components/Header";
 import MovieModal from "../../components/MovieModal";
 import { Helmet } from "react-helmet-async";
+import MovieHero from "../../components/MovieHero";
 const Home = () => {
   const theme = useTheme();
   const [page, setPage] = useState(1);
   const isNonMediumScreen = useMediaQuery("(min-width: 900px)");
-  const isMobile = useMediaQuery("(min-width: 900px)");
+  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const [getAllMovies, { data: allMovie, isLoading: allLoading }] =
     useGetAllMoviesMutation();
-
   useEffect(() => {
     getAllMovies({
       pageNumber: page,
@@ -42,78 +43,38 @@ const Home = () => {
         />
         <link rel="canonical" href="/#/movies" />
       </Helmet>
-      <Box
-        mt={"20px"}
-        display={"grid"}
-        gridTemplateColumns={"repeat(12, 1fr)"}
-        gap={"23px"}
-        sx={{
-          "& > div": {
-            gridColumn: isMobile ? undefined : "span 12",
-          },
-        }}
-      >
+      <Grid container>
         <Hero />
-        {isMobile && (
-          <Box
-            gridColumn={"span 4"}
-            justifyContent={"center"}
-            alignItems={"center"}
-            display={"flex"}
-            flexDirection={"column"}
-            gridRow={"span 3"}
-          >
-            <Typography textAlign={"center"} variant="h2" fontWeight={"bold"}>
-              HUTUM 101 - A chatbot for KUETians
-            </Typography>
-            <Typography textAlign={"center"} variant="h4">
-              Ad-free Entertainment for all
-            </Typography>
-          </Box>
-        )}
-        <Box gridColumn={isMobile ? "span 12" : "span 6"} gridRow={"span 3"}>
-          <Header title={"Most Viewed in HUTUM"} />
-          <Box
-            mt={"20px"}
-            display={"grid"}
-            gridTemplateColumns={"repeat(4, 1fr)"}
-            justifyContent={"space-between"}
-            rowGap={"20px"}
-            columnGap={"1.33%"}
-            sx={{
-              "& > div": {
-                gridColumn: isMobile ? undefined : "span 4",
-              },
-            }}
-          >
-            {state?.popularMovies &&
-              state?.popularMovies?.map((movie) => (
-                <EntertainmentBox key={movie?._id} data={movie} />
-              ))}
-          </Box>
-        </Box>
-        <Box gridColumn={"span 12"} gridRow={"auto"}>
-          <Header title={"All Movies in HUTUM"} />
-          <Box
-            mt={"20px"}
-            display={"grid"}
-            gridTemplateColumns={"repeat(4, minmax(0,1fr))"}
-            justifyContent={"space-between"}
-            rowGap={"20px"}
-            columnGap={"1.33%"}
-            sx={{
-              "& > div": {
-                gridColumn: isNonMediumScreen ? undefined : "span 4",
-              },
-            }}
-          >
-            {state?.allMovies?.length > 0 &&
-              state?.allMovies?.map((movie) => (
-                <EntertainmentBox key={movie?._id} data={movie} />
-              ))}
-          </Box>
-        </Box>
-      </Box>
+        {!isMobile && <MovieHero />}
+      </Grid>
+      <Header title={"Most Viewed in HUTUM"} />
+      <Grid
+        mb={"10px"}
+        container
+        spacing={"10px"}
+        columns={{ sm: 12, md: 9, lg: 12 }}
+      >
+        {state?.popularMovies &&
+          state?.popularMovies?.map((movie) => (
+            <Grid item sm={6} md={3} lg={3}>
+              <EntertainmentBox key={movie?._id} data={movie} />
+            </Grid>
+          ))}
+      </Grid>
+      <Header title={"All Movies in HUTUM"} />
+      <Grid
+        mb={"10px"}
+        container
+        spacing={"10px"}
+        columns={{ sm: 12, md: 9, lg: 12 }}
+      >
+        {state?.allMovies?.length > 0 &&
+          state?.allMovies?.map((movie) => (
+            <Grid item sm={6} md={3} lg={3}>
+              <EntertainmentBox key={movie?._id} data={movie} />
+            </Grid>
+          ))}
+      </Grid>
       <Box
         width={"100%"}
         py={"1rem"}

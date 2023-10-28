@@ -42,6 +42,13 @@ const NavBar = ({ isSideBarOpen, setIsSideBarOpen }) => {
   const isMobile = useMediaQuery("(max-width: 500px)");
   const [getSearch, { data, isLoading, error }] = useGetSearchMutation();
   const navigate = useNavigate();
+  const isNotMobile = useMediaQuery(theme.breakpoints.up("md"));
+  let borderCol;
+  if(theme.palette.mode == 'light'){
+    borderCol = 'rgba(0,0,0,0.2)';
+  }else{
+    borderCol = 'rgba(255,255,255,0.2)';
+  }
   useEffect(() => {
     if (search) {
       getSearch(search.trim());
@@ -73,9 +80,9 @@ const NavBar = ({ isSideBarOpen, setIsSideBarOpen }) => {
         {/* Left Side */}
         <FlexBetween>
           <Typography
+            variant={!isMobile ? "h2" : "h3"}
             sx={{
               fontWeight: "bold",
-              fontSize: isMobile ? "1.5rem" : "35px",
               cursor: "pointer",
             }}
             component={"div"}
@@ -87,7 +94,7 @@ const NavBar = ({ isSideBarOpen, setIsSideBarOpen }) => {
 
         {/* Middle Side */}
         {(pathname === "/series" || pathname === "/movies") && (
-          <Box sx={{ maxWidth: "500px", flexGrow: 1, mx: 2 }}>
+          <Box sx={{ maxWidth: "500px", flexGrow: 1, mx: 2, border: 1, borderColor: `${borderCol}`, borderRadius: '0.55rem' }}>
             <FlexBetween
               backgroundColor={theme.palette.background.alt}
               borderRadius="9px"
@@ -162,9 +169,9 @@ const NavBar = ({ isSideBarOpen, setIsSideBarOpen }) => {
         <FlexBetween gap={"0.55rem"}>
           <IconButton onClick={() => dispatch(setMode())}>
             {theme.palette.mode === "dark" ? (
-              <DarkModeOutlined sx={{ fontSize: "25px" }} />
+              <DarkModeOutlined fontSize={!isMobile ? "medium" : "small"} />
             ) : (
-              <LightModeOutlined sx={{ fontSize: "25px" }} />
+              <LightModeOutlined fontSize={!isMobile ? "medium" : "small"} />
             )}
           </IconButton>
           <IconButton
