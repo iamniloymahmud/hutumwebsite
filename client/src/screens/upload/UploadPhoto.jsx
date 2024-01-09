@@ -187,6 +187,7 @@ const UploadPhoto = () => {
         <DatePicker
           value={date}
           onChange={(newValue) => setDate(newValue)}
+          disableFuture
           sx={{
             label: {
               color: theme.palette.text.primary,
