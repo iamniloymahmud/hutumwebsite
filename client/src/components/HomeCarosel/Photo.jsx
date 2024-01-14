@@ -3,13 +3,14 @@ import React, { useEffect } from "react";
 import Carousel from "react-material-ui-carousel";
 import { useHeroImagesMutation } from "../../redux/endPoints/image/image";
 import CircularProgrssBar from "../CircularProgrssBar";
+import moment from "moment";
 
 const Photo = ({ h }) => {
   const theme = useTheme();
   const [heroImages, { data, isLoading, isError }] = useHeroImagesMutation();
   useEffect(() => {
     heroImages({
-      year: 2023,
+      year: new Date().getFullYear(),
       page: 1,
     });
   }, []);
